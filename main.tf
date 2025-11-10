@@ -30,10 +30,10 @@ resource "aws_vpc" "main" {
 
 # Subnets Públicas (una en cada AZ) [cite: 39]
 resource "aws_subnet" "public" {
-  count             = length(var.public_subnet_cidrs)
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = var.public_subnet_cidrs[count.index]
-  availability_zone = var.availability_zones[count.index]
+  count                   = length(var.public_subnet_cidrs)
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.public_subnet_cidrs[count.index]
+  availability_zone       = var.availability_zones[count.index]
   map_public_ip_on_launch = true # Importante para subnets públicas
 
   tags = {
@@ -81,6 +81,7 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
+/*
 # A.2 Seguridad (Security Groups) [cite: 43]
 resource "aws_security_group" "web_sg" {
   name        = "web-sg"
@@ -162,10 +163,10 @@ data "aws_ami" "amazon_linux_2" {
 resource "aws_instance" "web_server" {
   ami           = data.aws_ami.amazon_linux_2.id # AMI de Amazon Linux 2 [cite: 49]
   instance_type = var.instance_type              # t2.micro [cite: 49]
-  
+
   # Despliega en la primera subnet pública [cite: 49]
   subnet_id = aws_subnet.public[0].id
-  
+
   # Asocia el Security Group de Web [cite: 49]
   vpc_security_group_ids = [aws_security_group.web_sg.id]
 
@@ -259,9 +260,10 @@ resource "aws_efs_file_system" "shared_fs" {
 resource "aws_efs_mount_target" "main" {
   count = length(aws_subnet.private) # 2 Mount Targets, uno por subnet privada [cite: 71]
 
-  file_system_id  = aws_efs_file_system.shared_fs.id
-  subnet_id       = aws_subnet.private[count.index].id
-  
+  file_system_id = aws_efs_file_system.shared_fs.id
+  subnet_id      = aws_subnet.private[count.index].id
+
   # Asocia el Security Group de EFS [cite: 72]
   security_groups = [aws_security_group.efs_sg.id]
 }
+*/

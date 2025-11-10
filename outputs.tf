@@ -1,5 +1,5 @@
 # outputs.tf
-
+/*
 output "ec2_public_ip" {
   description = "IP Pública de la instancia EC2"
   value       = aws_instance.web_server.public_ip
@@ -19,3 +19,4 @@ output "efs_file_system_id" {
   description = "ID del sistema de archivos EFS"
   value       = aws_efs_file_system.shared_fs.id
 }
+*/
