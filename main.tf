@@ -18,7 +18,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-# --- REQUISITO A: INFRAESTRUCTURA BASE (Red y Cómputo) [cite: 33] ---
+# --- REQUISITO A: INFRAESTRUCTURA BASE (Red y Cómputo) ---
 
 # A.1 VPC y Redes [cite: 35]
 resource "aws_vpc" "main" {
